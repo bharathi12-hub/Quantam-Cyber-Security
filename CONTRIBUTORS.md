@@ -8,3 +8,4 @@ QuantumShield is built and maintained by:
 | rohithvenkatesan009-rik | [@rohithvenkatesan009-rik](https://github.com/rohithvenkatesan009-rik) | Contributor |
 
 Contributions are welcome — open an issue or a pull request.
+Contributor update
