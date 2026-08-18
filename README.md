@@ -44,11 +44,15 @@ Offline, knowledge-based explanations and secure replacement code.
 
 ![AI Security Advisor](docs/screenshots/advisor.png)
 
-### Compliance & Analytics
+### Compliance Mapping
+Findings mapped to NIST, PCI DSS, ISO 27001, SOC 2, OWASP, and CIS controls.
 
-| Compliance mapping | Risk analytics |
-|---|---|
-| ![Compliance](docs/screenshots/compliance.png) | ![Analytics](docs/screenshots/analytics.png) |
+![Compliance](docs/screenshots/compliance.png)
+
+### Risk Analytics
+Severity x quantum-threat matrix, and how each detected algorithm maps to its quantum-safe target.
+
+![Analytics](docs/screenshots/analytics.png)
 
 ### Not Found
 Unmatched routes render a 404 inside the app shell, with the attempted path and quick links back.
