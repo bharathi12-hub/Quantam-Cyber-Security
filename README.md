@@ -9,6 +9,7 @@
 ![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-33%20passing-brightgreen)
 ![NIST PQC](https://img.shields.io/badge/NIST-FIPS%20203%2F204%2F205-FF6F00)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 QuantumShield scans source code for cryptography that will be broken by quantum
 computers, classifies each finding by **how** quantum computing defeats it, scores
@@ -240,3 +241,9 @@ production infrastructure:
 Everything under `samples/vulnerable-app/` is **intentionally insecure** for
 demonstration only. The PEM block there is a non-functional placeholder, not a
 real key. Never use any of it in production.
+
+---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE) — © 2026 bharathi12-hub.
