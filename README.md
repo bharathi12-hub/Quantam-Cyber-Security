@@ -22,6 +22,36 @@ post-quantum replacement** (ML-KEM / ML-DSA / SLH-DSA — FIPS 203/204/205).
 
 ---
 
+## 📸 Screenshots
+
+### Executive Dashboard
+Risk posture, quantum-threat exposure, and detected algorithms across the estate.
+
+![Executive Dashboard](docs/screenshots/dashboard.png)
+
+### Cryptographic Findings
+Every finding with severity, quantum-threat class, and its NIST PQC replacement.
+
+![Findings](docs/screenshots/findings.png)
+
+### Migration Roadmap
+Phased PQC plan with effort, timeline, risk reduction, and rollback strategy.
+
+![Migration Roadmap](docs/screenshots/migration.png)
+
+### AI Security Advisor
+Offline, knowledge-based explanations and secure replacement code.
+
+![AI Security Advisor](docs/screenshots/advisor.png)
+
+### Compliance & Analytics
+
+| Compliance mapping | Risk analytics |
+|---|---|
+| ![Compliance](docs/screenshots/compliance.png) | ![Analytics](docs/screenshots/analytics.png) |
+
+---
+
 ## ✨ What it does
 
 A **working, runnable** quantum-safe security console — every panel is wired to a
