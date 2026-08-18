@@ -281,10 +281,12 @@ real key. Never use any of it in production.
 
 ## 👥 Team
 
-| | GitHub |
-|---|---|
-| **bharathi12-hub** | [@bharathi12-hub](https://github.com/bharathi12-hub) |
-| **rohithvenkatesan009-rik** | [@rohithvenkatesan009-rik](https://github.com/rohithvenkatesan009-rik) |
+Built jointly, with equal contribution from both authors.
+
+| | GitHub | Role |
+|---|---|---|
+| **bharathi12-hub** | [@bharathi12-hub](https://github.com/bharathi12-hub) | Co-creator & maintainer |
+| **rohithvenkatesan009-rik** | [@rohithvenkatesan009-rik](https://github.com/rohithvenkatesan009-rik) | Co-creator & maintainer |
 
 ---
 
