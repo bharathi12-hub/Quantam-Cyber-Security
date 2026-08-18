@@ -279,6 +279,15 @@ real key. Never use any of it in production.
 
 ---
 
+## 👥 Team
+
+| | GitHub |
+|---|---|
+| **bharathi12-hub** | [@bharathi12-hub](https://github.com/bharathi12-hub) |
+| **rohithvenkatesan009-rik** | [@rohithvenkatesan009-rik](https://github.com/rohithvenkatesan009-rik) |
+
+---
+
 ## 📄 License
 
 Released under the [MIT License](LICENSE) — © 2026 bharathi12-hub.
