@@ -5,7 +5,6 @@ from collections import defaultdict
 from typing import Dict, Iterable, List
 
 from ..detection.rules import RULES_BY_ID
-from ..risk.scoring import SEVERITY_WEIGHT
 from . import mapping
 
 _SEV_RANK = {"Critical": 0, "High": 1, "Medium": 2, "Low": 3}
@@ -15,12 +14,21 @@ def _worst(a: str, b: str) -> str:
     return a if _SEV_RANK.get(a, 9) <= _SEV_RANK.get(b, 9) else b
 
 
-def _status(worst_sev: str | None) -> str:
-    if worst_sev in ("Critical", "High"):
-        return "Fail"
-    if worst_sev in ("Medium", "Low"):
+# How much of a single control a finding of each severity consumes. A Critical
+# finding fails its control outright; lighter severities degrade it.
+_CONTROL_PENALTY = {"Critical": 1.0, "High": 0.75, "Medium": 0.4, "Low": 0.15}
+
+# Score thresholds for the reported status.
+_PASS_AT = 80
+_PARTIAL_AT = 50
+
+
+def _status(score: int, touched: bool) -> str:
+    if not touched or score >= _PASS_AT:
+        return "Pass"
+    if score >= _PARTIAL_AT:
         return "Partial"
-    return "Pass"
+    return "Fail"
 
 
 def compute(findings: Iterable[dict]) -> dict:
@@ -30,7 +38,6 @@ def compute(findings: Iterable[dict]) -> dict:
     controls: Dict[tuple, dict] = {}
     # framework -> aggregate
     fw_findings: Dict[str, int] = defaultdict(int)
-    fw_weight: Dict[str, float] = defaultdict(float)
     fw_worst: Dict[str, str] = {}
     fw_touched: Dict[str, set] = defaultdict(set)
 
@@ -39,7 +46,6 @@ def compute(findings: Iterable[dict]) -> dict:
         category = rule.pqc_category if rule else None
         threat = f.get("quantum_threat", "classical")
         severity = f.get("severity", "Low")
-        weight = SEVERITY_WEIGHT.get(severity, 1.0)
 
         for framework, cid, title in mapping.controls_for(category, threat):
             key = (framework, cid)
@@ -48,7 +54,6 @@ def compute(findings: Iterable[dict]) -> dict:
             entry["severity"] = _worst(entry["severity"], severity)
 
             fw_findings[framework] += 1
-            fw_weight[framework] += weight
             fw_worst[framework] = _worst(fw_worst.get(framework, "Low"), severity)
             fw_touched[framework].add(cid)
 
@@ -56,17 +61,30 @@ def compute(findings: Iterable[dict]) -> dict:
     passed = partial = failed = 0
     for name in mapping.FRAMEWORKS:
         touched = name in fw_findings
-        worst = fw_worst.get(name) if touched else None
-        status = _status(worst)
+
+        # Posture is the share of this framework's controls left intact. Each
+        # impacted control is degraded by its own worst severity, so the score
+        # is bounded and comparable across codebases of any size — unlike a raw
+        # weighted sum, which saturated to 0 after only three Critical findings.
+        universe = mapping.all_controls(name)
+        impacted = {
+            cid: data["severity"]
+            for (fw, cid), data in controls.items()
+            if fw == name
+        }
+        if universe:
+            penalty = sum(_CONTROL_PENALTY.get(sev, 0.15) for sev in impacted.values())
+            score = max(0, min(100, round(100 * (1 - penalty / len(universe)))))
+        else:
+            score = 100
+
+        status = _status(score, touched)
         if status == "Pass":
             passed += 1
         elif status == "Partial":
             partial += 1
         else:
             failed += 1
-
-        weighted = fw_weight.get(name, 0.0)
-        score = max(0, round(100 - min(100, weighted * 4)))
 
         ctrl_list = [
             {"id": cid, "title": data["title"], "findings": data["count"], "severity": data["severity"]}

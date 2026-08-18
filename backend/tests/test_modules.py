@@ -180,3 +180,41 @@ def test_simulation_computes_size_growth_and_bandwidth():
     assert sim["bandwidth"]["per_handshake_delta_b"] > 0
     assert sim["api_sites_to_update"] >= 1
     assert 0 <= sim["compatibility_risk"] <= 90
+
+
+def test_compliance_score_is_normalised_not_saturated():
+    """A clean repo passes; severity degrades posture gradually, not off a cliff.
+
+    The original formula summed severity weights unbounded and multiplied by 4,
+    so three Critical findings pinned every framework to 0 and "Partial" was
+    unreachable.
+    """
+    clean = compliance_engine.compute([])
+    assert clean["overall"]["passed"] == len(clean["frameworks"])
+    assert all(f["score"] == 100 for f in clean["frameworks"])
+
+    def scores(sev, threat="classical", rule="MD5"):
+        d = compliance_engine.compute([{"rule_id": rule, "severity": sev, "quantum_threat": threat}])
+        return {f["name"]: f["score"] for f in d["frameworks"] if f["findings"]}
+
+    low, medium, high = scores("Low"), scores("Medium"), scores("High")
+    assert low and medium and high
+    # Monotonic: heavier severity never scores better on the same control set.
+    for name in low:
+        assert low[name] >= medium[name] >= high[name]
+
+    # Volume alone must not saturate the score to zero.
+    many = compliance_engine.compute(
+        [{"rule_id": "MD5", "severity": "Medium", "quantum_threat": "classical"}] * 200
+    )
+    assert any(f["score"] > 0 for f in many["frameworks"])
+
+    # All three statuses must be reachable.
+    statuses = set()
+    for sev in ("Low", "Medium", "High", "Critical"):
+        for threat, rule in (("classical", "MD5"), ("shor", "RSA")):
+            d = compliance_engine.compute(
+                [{"rule_id": rule, "severity": sev, "quantum_threat": threat}]
+            )
+            statuses.update(f["status"] for f in d["frameworks"])
+    assert {"Pass", "Partial", "Fail"} <= statuses

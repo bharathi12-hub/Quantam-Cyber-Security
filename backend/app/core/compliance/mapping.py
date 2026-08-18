@@ -108,3 +108,25 @@ def controls_for(pqc_category: str | None, quantum_threat: str) -> List[Control]
             seen.add(key)
             out.append(c)
     return out
+
+
+def all_controls(framework: str) -> List[Control]:
+    """Every control this module can ever attribute to `framework`.
+
+    Compliance posture is measured against this universe rather than against
+    raw finding volume, so a large codebase is not penalised simply for being
+    large.
+    """
+    pools: List[Control] = list(_BASE_CRYPTO) + list(_QUANTUM)
+    for controls in CATEGORY_CONTROLS.values():
+        pools += controls
+    seen = set()
+    out: List[Control] = []
+    for c in pools:
+        if c[0] != framework:
+            continue
+        if c[1] in seen:
+            continue
+        seen.add(c[1])
+        out.append(c)
+    return out
