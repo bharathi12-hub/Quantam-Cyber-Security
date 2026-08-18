@@ -2,6 +2,14 @@
 
 ### Enterprise Platform for Quantum-Safe Cryptography Assessment and Migration
 
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-33%20passing-brightgreen)
+![NIST PQC](https://img.shields.io/badge/NIST-FIPS%20203%2F204%2F205-FF6F00)
+
 QuantumShield scans source code for cryptography that will be broken by quantum
 computers, classifies each finding by **how** quantum computing defeats it, scores
 your overall risk posture, and maps every issue to a **NIST-standardized
@@ -37,7 +45,7 @@ real backend API with real data (no placeholders, no fake charts):
 | **Reporting** — export **PDF / SARIF 2.1.0 / CSV / JSON / Markdown** | ✅ Implemented |
 | **SOC console UI** — dark glassmorphism, command palette (Ctrl K), global search, notifications, keyboard shortcuts, collapsible sidebar | ✅ Implemented |
 | REST API (FastAPI + OpenAPI), SQLAlchemy persistence, seed data | ✅ 37 endpoints / 11 modules |
-| Automated tests (pytest) | ✅ 32 passing |
+| Automated tests (pytest) | ✅ 33 passing |
 
 See [**Roadmap**](#-roadmap) for the remaining infra stream (Postgres/Redis,
 RBAC/MFA, Docker/K8s, WebSockets, observability).
