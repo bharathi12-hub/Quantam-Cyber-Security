@@ -2,14 +2,7 @@
 
 ### Enterprise Platform for Quantum-Safe Cryptography Assessment and Migration
 
-![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white)
-![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-33%20passing-brightgreen)
-![NIST PQC](https://img.shields.io/badge/NIST-FIPS%20203%2F204%2F205-FF6F00)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?logo=vite&logoColor=white) ![Tests](https://img.shields.io/badge/tests-33%20passing-brightgreen) ![NIST PQC](https://img.shields.io/badge/NIST-FIPS%20203%2F204%2F205-FF6F00) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 QuantumShield scans source code for cryptography that will be broken by quantum
 computers, classifies each finding by **how** quantum computing defeats it, scores
