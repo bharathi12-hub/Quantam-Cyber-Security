@@ -50,6 +50,11 @@ Offline, knowledge-based explanations and secure replacement code.
 |---|---|
 | ![Compliance](docs/screenshots/compliance.png) | ![Analytics](docs/screenshots/analytics.png) |
 
+### Not Found
+Unmatched routes render a 404 inside the app shell, with the attempted path and quick links back.
+
+![Page Not Found](docs/screenshots/not-found.png)
+
 ---
 
 ## ✨ What it does
