@@ -1,24 +1,32 @@
 import { ReactNode } from "react";
 
 // Minimal markdown renderer for advisor content (headings, lists, bold,
-// inline + fenced code). Avoids a heavy dependency.
+// italic, inline + fenced code). Avoids a heavy dependency.
+//
+// Order matters: **bold** must be tried before *italic*. Underscore italics
+// require non-word boundaries so identifiers like token_signing_key are left
+// alone, matching CommonMark's intraword rule.
+const INLINE_RE = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*|(?<![A-Za-z0-9])_[^_\n]+_(?![A-Za-z0-9]))/g;
+
 function inline(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
-  const re = /(\*\*[^*]+\*\*|`[^`]+`)/g;
   let last = 0;
   let m: RegExpExecArray | null;
   let key = 0;
-  while ((m = re.exec(text))) {
+  INLINE_RE.lastIndex = 0;
+  while ((m = INLINE_RE.exec(text))) {
     if (m.index > last) nodes.push(text.slice(last, m.index));
     const tok = m[0];
     if (tok.startsWith("**"))
       nodes.push(<strong key={key++} className="font-semibold text-slate-900 dark:text-white">{tok.slice(2, -2)}</strong>);
-    else
+    else if (tok.startsWith("`"))
       nodes.push(
         <code key={key++} className="rounded bg-slate-200/70 px-1 py-0.5 font-mono text-[0.85em] text-brand-700 dark:bg-white/10 dark:text-brand-300">
           {tok.slice(1, -1)}
         </code>
       );
+    else
+      nodes.push(<em key={key++} className="italic">{tok.slice(1, -1)}</em>);
     last = m.index + tok.length;
   }
   if (last < text.length) nodes.push(text.slice(last));
